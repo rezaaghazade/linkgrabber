@@ -1,4 +1,4 @@
-#!/bin/bash - 
+#!/bin/bash  
 #===============================================================================
 #
 #          FILE: linkGrabber.sh
@@ -19,18 +19,30 @@
 
 #set -o nounset                              # Treat unset variables as an error
 
+checkUrl ()
+{
+        array=(avi mkv mp4 mp3 pdf odt odp sh deb zip bz2 gz)
+	echo ${array[4]}
+
+}	# ----------  end of function checkUrl  ----------
 xclipCheck ()
 {
-        echo $1
-        wget -o log --spider $1
-        if [ $? -eq 0 ]
-        then
-                checkURL
-        fi
-}       # ----------  end of function xclipCheck  ----------
+	
+	wget -o log --spider $1
+	rm log
+	echo "hi babe $?"
+	if [ $? -eq 0 ]
+	then
+		echo "Address has a destination"
+		checkUrl $1
+		
+	fi
+}	# ----------  end of function xclipCheck  ----------
 
 xclipBoardContent=`xclip -o`
 if [ -n $xclipBoardContent ]
 then
-        xclipCheck $xclipBoardContent
+	xclipCheck $xclipBoardContent
 fi
+
+
