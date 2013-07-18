@@ -21,8 +21,24 @@
 
 checkUrl ()
 {
-        array=(avi mkv mp4 mp3 pdf odt odp sh deb zip bz2 gz)
-	echo ${array[4]}
+	link=`echo $1`
+	declare -a array=('avi' 'mkv' 'mp4' 'mp3' 'pdf' 'odt' 'odp' 'sh' 'deb' 'zip' 'bz2' 'gz')
+	extension=`echo ${link##*.}`
+	index=0
+	for i in `echo ${array[@]}`
+	do
+		if [ $i==$extension ]
+		then
+			if [ $index -eq 0 ]
+			then
+				index=$((++index))
+				echo "extension Detected,"
+			fi
+		else
+			echo "not detected"
+		fi
+	done
+	
 
 }	# ----------  end of function checkUrl  ----------
 xclipCheck ()
@@ -39,6 +55,12 @@ xclipCheck ()
 	fi
 }	# ----------  end of function xclipCheck  ----------
 
+[ -x /usr/bin/zenity ]
+if [ $? -ne 0 ]
+then
+	echo "Zenity not Found,Plz install it first"
+	exit 1
+fi
 xclipBoardContent=`xclip -o`
 if [ -n $xclipBoardContent ]
 then
