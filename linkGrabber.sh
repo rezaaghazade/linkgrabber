@@ -19,8 +19,13 @@
 
 #set -o nounset                              # Treat unset variables as an error
 
+downloadFile ()
+{
+	
+}	# ----------  end of function downloadFile  ----------
 checkUrl ()
 {
+	echo "in checkURL"
 	link=`echo $1`
 	declare -a array=('avi' 'mkv' 'mp4' 'mp3' 'pdf' 'odt' 'odp' 'sh' 'deb' 'zip' 'bz2' 'gz')
 	extension=`echo ${link##*.}`
@@ -33,6 +38,14 @@ checkUrl ()
 			then
 				index=$((++index))
 				echo "extension Detected,"
+				zenity --info --text="Link Detected : $1 --size Of File : $2"	
+				if [ $? -eq 0 ]
+				then
+					FILE=`zenity --file-selection --directory --title="Select a Directory for Saving File"`
+					cd $FILE
+					downloadFile $1		
+				fi
+		#	zenity --info --text="Link Detected $1.\n size Of File : $2"	
 			fi
 		else
 			echo "not detected"
@@ -43,14 +56,15 @@ checkUrl ()
 }	# ----------  end of function checkUrl  ----------
 xclipCheck ()
 {
-	
+	echo "in xclipCheck"	
 	wget -o log --spider $1
+	sizeOfFile=`sed -n '5p' log |cut -d ' ' -f 3`
 	rm log
-	echo "hi babe $?"
+	echo "Size : $sizeOfFile"
 	if [ $? -eq 0 ]
 	then
 		echo "Address has a destination"
-		checkUrl $1
+		checkUrl $1 $sizeOfFile
 		
 	fi
 }	# ----------  end of function xclipCheck  ----------
