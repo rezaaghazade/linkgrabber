@@ -8,7 +8,7 @@
 #   DESCRIPTION: 
 # 
 #       OPTIONS: ---
-#  REQUIREMENTS: kernel >  2.6.0 , bash > 4.2.0
+#  REQUIREMENTS: kernel >  2.6.0 , bash > 4.2.0 , zenity > 3.6.0
 #          BUGS: ---
 #         NOTES: read it,learn it,share it
 #        AUTHOR: |reza.aghazade|  ,  |reza.zah1991@gmail.com|
@@ -21,7 +21,7 @@
 
 downloadFile ()
 {
-	
+	axel -n 33 "$1"	
 }	# ----------  end of function downloadFile  ----------
 checkUrl ()
 {
